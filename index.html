@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Mi Portafolio Web</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ff9a9e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 182, 193, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 218, 224, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 240, 245, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            color: #fff;
+            padding: 60px 20px 40px;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        header::after {
+            content: '✨';
+            font-size: 4em;
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-20px); }
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            background: linear-gradient(45deg, #fff, #ffe6f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        header p {
+            font-size: 1.3em;
+            font-weight: 300;
+            opacity: 0.95;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 20px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            background: linear-gradient(45deg, #fff, #ffe6f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1em;
+            font-weight: 300;
+            margin-top: 5px;
+        }
+
+        .module {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(255, 182, 193, 0.3);
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.4s ease;
+        }
+
+        .module:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 70px rgba(255, 182, 193, 0.4);
+        }
+
+        .module-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2em;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #ff6b9d;
+            position: relative;
+        }
+
+        .module-title::before {
+            content: '🌸';
+            position: absolute;
+            left: -50px;
+            font-size: 0.8em;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe6eb 100%);
+            border-radius: 20px;
+            padding: 30px;
+            text-decoration: none;
+            color: #5a2a3d;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.2);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.3) 0%, transparent 70%);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+            top: -25%;
+            right: -25%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            border-color: #ff6b9d;
+            box-shadow: 0 20px 50px rgba(255, 107, 157, 0.4);
+            background: linear-gradient(135deg, #ffffff 0%, #fff0f3 100%);
+        }
+
+        .icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            border-radius: 50%;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5em;
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-card:hover .icon {
+            transform: rotate(360deg) scale(1.1);
+            box-shadow: 0 12px 30px rgba(255, 107, 157, 0.6);
+        }
+
+        .project-name {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #c44569;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-link {
+            font-size: 1em;
+            color: #ff6b9d;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .project-link {
+            transform: translateX(5px);
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 50px 20px 30px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            font-size: 1.1em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+
+        .heart {
+            display: inline-block;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            color: #ff6b9d;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+            50% { transform: scale(1); }
+        }
+
+        .decorative-element {
+            position: fixed;
+            font-size: 3em;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+            animation: float-around 20s ease-in-out infinite;
+        }
+
+        .dec-1 { top: 10%; left: 5%; animation-delay: 0s; }
+        .dec-2 { top: 30%; right: 8%; animation-delay: 2s; }
+        .dec-3 { bottom: 20%; left: 10%; animation-delay: 4s; }
+        .dec-4 { bottom: 10%; right: 5%; animation-delay: 6s; }
+
+        @keyframes float-around {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(5deg); }
+            50% { transform: translateY(-15px) rotate(-5deg); }
+            75% { transform: translateY(-40px) rotate(3deg); }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .module {
+                padding: 25px;
+            }
+
+            .module-title::before {
+                left: 0;
+                top: -35px;
+            }
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 2em;
+            animation: bounce 2s ease-in-out infinite;
+            opacity: 0.7;
+            z-index: 1000;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-15px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="decorative-element dec-1">🌸</div>
+    <div class="decorative-element dec-2">✨</div>
+    <div class="decorative-element dec-3">💖</div>
+    <div class="decorative-element dec-4">🦋</div>
+
+    <div class="container">
+        <header>
+            <h1>Mi Portafolio Creativo</h1>
+            <p>Diseños con pasión y elegancia ✨</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Módulos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">21</div>
+                    <div class="stat-label">Proyectos</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="module">
+            <h2 class="module-title">Módulo 1 - Fundamentos</h2>
+            <div class="projects-grid">
+                <a href="https://linda-2364.github.io/TARJETA-PERFIL/" class="project-card">
+                    <div class="icon">T</div>
+                    <div class="project-name">Tarjeta Perfil</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/ARTICULO/" class="project-card">
+                    <div class="icon">A</div>
+                    <div class="project-name">Artículo</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/NAVEGACION/" class="project-card">
+                    <div class="icon">N</div>
+                    <div class="project-name">Navegación</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="module">
+            <h2 class="module-title">Módulo 2 - Box Model</h2>
+            <div class="projects-grid">
+                <a href="https://linda-2364.github.io/BORDERS/" class="project-card">
+                    <div class="icon">B</div>
+                    <div class="project-name">Borders</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/PADDINGS/" class="project-card">
+                    <div class="icon">P</div>
+                    <div class="project-name">Paddings</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/BOX-SIZING/" class="project-card">
+                    <div class="icon">S</div>
+                    <div class="project-name">Box Sizing</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/CARD/" class="project-card">
+                    <div class="icon">C</div>
+                    <div class="project-name">Card</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="module">
+            <h2 class="module-title">Módulo 3 - Componentes</h2>
+            <div class="projects-grid">
+                <a href="https://linda-2364.github.io/MODAL/" class="project-card">
+                    <div class="icon">M</div>
+                    <div class="project-name">Modal</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/NAVBAR-STIKY/" class="project-card">
+                    <div class="icon">N</div>
+                    <div class="project-name">Navbar Sticky</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/CARD-BADGE/" class="project-card">
+                    <div class="icon">B</div>
+                    <div class="project-name">Card Badge</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/HERO-OVERLAY/" class="project-card">
+                    <div class="icon">H</div>
+                    <div class="project-name">Hero Overlay</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="module">
+            <h2 class="module-title">Módulo 4 - Layouts</h2>
+            <div class="projects-grid">
+                <a href="https://linda-2364.github.io/NAVBAR-FLEXBOX/" class="project-card">
+                    <div class="icon">F</div>
+                    <div class="project-name">Navbar Flexbox</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/GALLERY-GRID/" class="project-card">
+                    <div class="icon">G</div>
+                    <div class="project-name">Gallery Grid</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/HOLY-GRAIL/" class="project-card">
+                    <div class="icon">H</div>
+                    <div class="project-name">Holy Grail</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/DASHBOARD/" class="project-card">
+                    <div class="icon">D</div>
+                    <div class="project-name">Dashboard</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/CARDS-RESPONSIVE/" class="project-card">
+                    <div class="icon">C</div>
+                    <div class="project-name">Cards Responsive</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="module">
+            <h2 class="module-title">Módulo 5 - Responsive Design</h2>
+            <div class="projects-grid">
+                <a href="https://linda-2364.github.io/LANDING-RESPONSIVE/" class="project-card">
+                    <div class="icon">L</div>
+                    <div class="project-name">Landing Responsive</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/GRID-RESPONSIVE/" class="project-card">
+                    <div class="icon">G</div>
+                    <div class="project-name">Grid Responsive</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/M5_EJERCICIO-3/" class="project-card">
+                    <div class="icon">E</div>
+                    <div class="project-name">Ejercicio 3</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/IMG-RESPONSIVA/" class="project-card">
+                    <div class="icon">I</div>
+                    <div class="project-name">Img Responsiva</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/TYPOGRAPHY/" class="project-card">
+                    <div class="icon">T</div>
+                    <div class="project-name">Typography</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+                <a href="https://linda-2364.github.io/IMAGENES-RESPONSIVE/" class="project-card">
+                    <div class="icon">R</div>
+                    <div class="project-name">Imágenes Responsive</div>
+                    <div class="project-link">Ver proyecto →</div>
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Creado con <span class="heart">💖</span> y dedicación</p>
+            <p style="margin-top: 10px; opacity: 0.9; font-size: 0.95em;">✨ Cada proyecto cuenta una historia ✨</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.project-card');
+            
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 80);
+            });
+
+            cards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 200);
+                });
+            });
+
+            const modules = document.querySelectorAll('.module');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            modules.forEach(module => {
+                module.style.opacity = '0';
+                module.style.transform = 'translateY(50px)';
+                module.style.transition = 'all 0.8s ease';
+                observer.observe(module);
+            });
+        });
+    </script>
+</body>
+</html>
